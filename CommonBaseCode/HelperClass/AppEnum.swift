@@ -80,3 +80,12 @@ enum HTTPMethod: String {
     case delete = "DELETE"  // Used to delete data from the server
     // Extend this enum with more methods (e.g., PATCH, HEAD) if needed
 }
+
+enum FieldType {
+    case email
+    case password
+    case phone
+    case username
+    case fullname
+    case gender
+}

@@ -33,6 +33,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var constraintCountryCodeWidth: NSLayoutConstraint!
     @IBOutlet weak var viewBlink: UIView!
     
+    @IBOutlet weak var tableView: UITableView!
+
+    var fields: [FieldData] = [
+        FieldData(title: "Email", placeholder: "Enter email", value: "", type: .email),
+        FieldData(title: "Password", placeholder: "Enter password", value: "", type: .password),
+        FieldData(title: "Phone", placeholder: "Enter phone", value: "", type: .phone),
+        FieldData(title: "Username", placeholder: "Enter username", value: "", type: .username),
+        FieldData(title: "Full Name", placeholder: "Enter full name", value: "", type: .fullname)
+    ]
     /// Computed property to get current country info using locale
     var currentCountry: Country? {
         guard let countryCode = Locale.current.region?.identifier else {
@@ -58,6 +67,14 @@ class ViewController: UIViewController {
         // self.downloadMediaIfNeeded()
         
         self.viewBlink.blinkView()
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 80
+        
+        tableView.register(UINib(nibName: "FormFieldCell", bundle: nil), forCellReuseIdentifier: "FormFieldCell")
     }
     
     // MARK: - Setup Methods
@@ -127,6 +144,32 @@ extension ViewController {
     @IBAction func btnCountryCodeSelectionAction(_ sender: UIButton) {
         presentCountryPickerScene(withSelectionControlEnabled: false)
     }
+    
+    /// Validate all input filed button tap
+    @IBAction func validateAllFields(_ sender: UIButton) {
+        var allValid = true
+        
+        for i in 0..<fields.count {
+            let indexPath = IndexPath(row: i, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) as? FormFieldCell {
+                let result = cell.validateInput(in: tableView, at: indexPath)
+                if result.isValid {
+                    fields[i].value = result.text ?? ""
+                }
+                allValid = allValid && result.isValid
+            }
+        }
+        
+        if allValid {
+            print("✅ All fields valid")
+            for field in fields {
+                print("\(field.title): \(field.value)")
+            }
+        } else {
+            print("❌ Validation failed")
+        }
+    }
+
 }
 
 //Present Country Picker Controller
@@ -271,5 +314,22 @@ extension ViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
     
         return true
+    }
+}
+
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fields.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FormFieldCell", for: indexPath) as? FormFieldCell else {
+            return UITableViewCell()
+        }
+        
+        let field = fields[indexPath.row]
+        cell.configure(with: field.title, placeholder: field.placeholder, type: field.type)
+        
+        return cell
     }
 }
