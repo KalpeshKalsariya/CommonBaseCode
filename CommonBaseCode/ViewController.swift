@@ -17,11 +17,27 @@ class ViewController: UIViewController {
         return LoginViewModel()
     }()
     
+    var isFirstTimeGetCountry: Bool = true
+    @IBOutlet weak var imgCountryFlag: UIImageView!
+    @IBOutlet weak var lblCountryCode: UILabel!
+    @IBOutlet weak var lblCountryTitle: UILabel!
+    @IBOutlet weak var txtPhoneCode: UITextField!
+    @IBOutlet weak var viewPhone: UIView!
+    @IBOutlet weak var viewPhoneBorder: UIView!
+    @IBOutlet weak var constraintCountryCodeWidth: NSLayoutConstraint!
+    
+    var currentCountry: Country? {
+        guard let countryCode = Locale.current.region?.identifier else {
+            return nil
+        }
+        return Country(countryCode: countryCode)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.callLoginAPI()
+//        self.callLoginAPI()
         
         /**
          This method is used to check socket connection
@@ -87,9 +103,31 @@ class ViewController: UIViewController {
                 }
             }
         }*/
+        
+        self.setCurrentCountry()
     }
 
 
+    private func setCurrentCountry() {
+        lblCountryCode.text = currentCountry?.dialingCode
+        let font = UIFont.systemFont(ofSize: AppConstant.DeviceType.IS_PAD ? 18.0 : 16.0)
+        self.lblCountryCode.font = font
+        self.txtPhoneCode.font = font
+        let extrawidth = AppConstant.DeviceType.IS_PAD ? 10 : 0
+        let cellWidth = (currentCountry?.dialingCode?.textWidth(font:font) ?? 0.00) + CGFloat(extrawidth)
+        constraintCountryCodeWidth.constant = cellWidth
+        
+        #if SWIFT_PACKAGE
+            let bundle = Bundle.module
+        #else
+            let bundle = Bundle(for: Country.self)
+        #endif
+        
+        let flagImg = UIImage(named: currentCountry!.imagePath, in: bundle, compatibleWith: nil)
+        
+        imgCountryFlag.image = flagImg
+        imgCountryFlag.isHidden = false
+    }
 }
 
 //API call
@@ -108,6 +146,82 @@ extension ViewController {
             }
         } failure: { error in
             self.showToast(message: error, isSuccess: false)
+        }
+    }
+}
+
+//Button Action
+extension ViewController {
+    @IBAction func btnCountryCodeSelectionAction(_ sender: UIButton) {
+        presentCountryPickerScene(withSelectionControlEnabled: false)
+    }
+}
+
+//Present Country Picker Controller
+extension ViewController {
+    
+    /// Dynamically presents country picker scene with an option of including `Selection Control`.
+    ///
+    /// By default, invoking this function without defining `selectionControlEnabled` parameter. Its set to `True`
+    /// unless otherwise and the `Selection Control` will be included into the list view.
+    ///
+    /// - Parameter selectionControlEnabled: Section Control State. By default its set to `True` unless otherwise.
+    
+    func presentCountryPickerScene(withSelectionControlEnabled selectionControlEnabled: Bool = true) {
+        switch selectionControlEnabled {
+        case true:
+            // Present country picker with `Section Control` enabled
+            CountryPickerWithSectionViewController.presentController(on: self, configuration: { countryController in
+                countryController.configuration.flagStyle = .circular
+                countryController.configuration.isCountryFlagHidden = false
+                countryController.configuration.isCountryDialHidden = false
+                countryController.configuration.labelFont = UIFont.boldSystemFont(ofSize: 16.0)
+                countryController.configuration.detailFont = UIFont.boldSystemFont(ofSize: 14.0)
+                if isFirstTimeGetCountry {
+                    countryController.manager.lastCountrySelected = currentCountry//onSelectCountry?(currentCountry!)
+                }
+//                countryController.favoriteCountriesLocaleIdentifiers = ["IN", "US"]
+
+            }) { [weak self] country in
+                
+                guard let self = self else { return }
+                self.imgCountryFlag.isHidden = false
+                self.imgCountryFlag.image = country.flag
+                self.lblCountryCode.text = country.dialingCode
+                self.isFirstTimeGetCountry = false
+                
+                let font = UIFont.systemFont(ofSize: AppConstant.DeviceType.IS_PAD ? 18.0 : 16.0)
+                let extrawidth = AppConstant.DeviceType.IS_PAD ? 10 : 0
+                let cellWidth = (country.dialingCode?.textWidth(font:font) ?? 0.00) + CGFloat(extrawidth)
+                self.constraintCountryCodeWidth.constant = cellWidth
+            }
+            
+        case false:
+            // Present country picker without `Section Control` enabled
+            CountryPickerController.presentController(on: self, configuration: { countryController in
+                countryController.configuration.flagStyle = .corner
+                countryController.configuration.isCountryFlagHidden = false
+                countryController.configuration.isCountryDialHidden = false
+                countryController.configuration.labelFont = UIFont.boldSystemFont(ofSize: 16.0)
+                countryController.configuration.detailFont = UIFont.boldSystemFont(ofSize: 14.0)
+                if isFirstTimeGetCountry {
+                    countryController.manager.lastCountrySelected = currentCountry//onSelectCountry?(currentCountry!)
+                }
+//                countryController.favoriteCountriesLocaleIdentifiers = ["IN", "US"]
+                
+            }) { [weak self] country in
+                
+                guard let self = self else { return }
+                self.imgCountryFlag.isHidden = false
+                self.imgCountryFlag.image = country.flag
+                self.lblCountryCode.text = country.dialingCode
+                self.isFirstTimeGetCountry = false
+                
+                let font = UIFont.systemFont(ofSize: AppConstant.DeviceType.IS_PAD ? 18.0 : 16.0)
+                let extrawidth = AppConstant.DeviceType.IS_PAD ? 10 : 5
+                let cellWidth = (country.dialingCode?.textWidth(font:font) ?? 0.00) + CGFloat(extrawidth)
+                self.constraintCountryCodeWidth.constant = cellWidth
+            }
         }
     }
 }
