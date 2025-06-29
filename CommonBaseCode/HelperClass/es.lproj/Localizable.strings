@@ -26,10 +26,146 @@
 "button_title_cancel" = "Cancelar";
 "static_text_label_required" = "Requerida";
 "static_text_label_no_data_found" = "Datos no encontrados.";
-"empty_validate_email" = "Por favor introduzca su correo electrónico.";
-"invalid_email" = "Email inválido.";
-"empty_validate_password" = "Por favor, ingrese contraseña.";
-"error_invalid_password" = "La contraseña debe tener mínimo 8 caracteres y contener 1 caracter especial.";
 "static_text_label_password_recovery" = "Le enviaremos un correo electrónico de recuperación de contraseña a su correo electrónico.";
 "static_text_label_out_of_stock" = "Agotado";
 "static_text_label_in_stock" = "en stock";
+
+
+"empty_validate_email" = "Por favor introduzca su correo electrónico.";
+"invalid_email" = "Por favor introduzca un correo electrónico válido.";
+"short_email" = "Su correo electrónico debe tener al menos 5 caracteres.";
+"long_email" = "Su correo electrónico no debe tener más de 254 caracteres.";
+"required_email" = "La dirección de correo electrónico es obligatoria.";
+
+"empty_validate_password" = "Por favor introduzca una contraseña.";
+"short_password" = "Su contraseña debe tener al menos 8 caracteres.";
+"long_password" = "Su contraseña no debe tener más de 100 caracteres.";
+"error_invalid_password" = "Su contraseña debe contener al menos un número, una letra mayúscula, una letra minúscula y un carácter especial.";
+"required_password" = "La contraseña es obligatoria.";
+
+"empty_username" = "Por favor introduzca un nombre de usuario.";
+"short_username" = "El nombre de usuario debe tener al menos 3 caracteres.";
+"long_username" = "El nombre de usuario no debe tener más de 30 caracteres.";
+"invalid_username" = "El nombre de usuario solo puede contener caracteres alfanuméricos y guiones bajos.";
+"required_username" = "El nombre de usuario es obligatorio.";
+
+"empty_fullname" = "Por favor introduzca su nombre completo.";
+"short_fullname" = "El nombre completo debe tener al menos 2 caracteres.";
+"long_fullname" = "El nombre completo no debe tener más de 50 caracteres.";
+"invalid_fullname" = "Por favor introduzca un nombre válido.";
+"required_fullname" = "El nombre completo es obligatorio.";
+
+"empty_phone" = "Por favor introduzca un número de teléfono.";
+"invalid_phone" = "Por favor introduzca un número de teléfono válido.";
+"short_phone" = "El número de teléfono debe tener al menos 10 dígitos.";
+"long_phone" = "El número de teléfono no debe tener más de 15 dígitos.";
+"required_phone" = "El número de teléfono es obligatorio.";
+
+"empty_address" = "Por favor introduzca una dirección.";
+"short_address" = "La dirección debe tener al menos 5 caracteres.";
+"long_address" = "La dirección no debe tener más de 100 caracteres.";
+"required_address" = "La dirección es obligatoria.";
+
+"empty_dob" = "Por favor introduzca su fecha de nacimiento.";
+"invalid_dob" = "Por favor introduzca una fecha de nacimiento válida.";
+"required_dob" = "La fecha de nacimiento es obligatoria.";
+
+"empty_credit_card" = "Por favor introduzca un número de tarjeta de crédito.";
+"invalid_credit_card" = "Por favor introduzca un número de tarjeta de crédito válido.";
+"required_credit_card" = "La tarjeta de crédito es obligatoria.";
+
+"empty_expiry_date" = "Por favor introduzca una fecha de vencimiento.";
+"invalid_expiry_date" = "Por favor introduzca una fecha de vencimiento válida.";
+"expired_expiry_date" = "Su tarjeta de crédito ha expirado.";
+"required_expiry_date" = "La fecha de vencimiento de la tarjeta de crédito es obligatoria.";
+
+"empty_cvv" = "Por favor introduzca el CVV de su tarjeta de crédito.";
+"invalid_cvv" = "Por favor introduzca un CVV válido.";
+"required_cvv" = "El número CVV es obligatorio.";
+
+"empty_zip" = "Por favor introduzca su código postal.";
+"invalid_zip" = "Por favor introduzca un código postal válido.";
+"required_zip" = "El código postal es obligatorio.";
+
+"empty_security_question" = "Por favor seleccione una pregunta de seguridad.";
+
+"empty_security_answer" = "Por favor proporcione una respuesta a su pregunta de seguridad.";
+
+"empty_location" = "Por favor introduzca su ubicación.";
+"short_location" = "La ubicación debe tener al menos 2 caracteres.";
+"long_location" = "La ubicación no debe tener más de 50 caracteres.";
+"required_location" = "La ubicación es obligatoria.";
+
+"empty_select_location" = "Por favor seleccione su ubicación.";
+"invalid_select_location" = "Por favor seleccione una ubicación válida.";
+"required_select_location" = "La selección de ubicación es obligatoria.";
+
+"empty_upload_profile_picture" = "Por favor cargue su foto de perfil.";
+"invalid_upload_profile_picture" = "Por favor cargue un archivo de imagen válido.";
+"format_upload_profile_picture" = "Su foto de perfil debe estar en formato .jpg, .jpeg, .png o .gif.";
+"size_upload_profile_picture" = "El tamaño del archivo de la foto de perfil no debe superar los 5 MB.";
+"required_upload_profile_picture" = "La foto de perfil es obligatoria.";
+
+"empty_select_profile_picture" = "Por favor seleccione su foto de perfil.";
+"invalid_select_profile_picture" = "Por favor seleccione una foto de perfil válida.";
+"required_select_profile_picture" = "La selección de la foto de perfil es obligatoria.";
+
+"empty_age" = "Por favor introduzca su edad.";
+"invalid_age" = "Por favor introduzca una edad válida.";
+"low_age" = "Debe tener al menos 18 años.";
+"high_age" = "La edad no debe ser superior a 100 años.";
+"required_age" = "La edad es obligatoria.";
+
+"empty_select_age" = "Por favor seleccione su edad.";
+"invalid_select_age" = "Por favor seleccione una edad válida.";
+"required_select_age" = "La selección de edad es obligatoria.";
+
+"empty_gender" = "Por favor seleccione su género.";
+"invalid_gender" = "Por favor seleccione un género válido.";
+"required_gender" = "La selección de género es obligatoria.";
+
+"empty_first_name" = "Por favor introduzca su nombre.";
+"short_first_name" = "El nombre debe tener al menos 2 caracteres.";
+"long_first_name" = "El nombre no debe tener más de 50 caracteres.";
+"required_first_name" = "El nombre es obligatorio.";
+
+"empty_last_name" = "Por favor introduzca su apellido.";
+"short_last_name" = "El apellido debe tener al menos 2 caracteres.";
+"long_last_name" = "El apellido no debe tener más de 50 caracteres.";
+"required_last_name" = "El apellido es obligatorio.";
+
+"empty_middle_name" = "Por favor introduzca su segundo nombre.";
+"short_middle_name" = "El segundo nombre debe tener al menos 2 caracteres.";
+"long_middle_name" = "El segundo nombre no debe tener más de 50 caracteres.";
+"required_middle_name" = "El segundo nombre es obligatorio.";
+
+"empty_retype_password" = "Por favor vuelva a introducir su contraseña.";
+"mismatch_retype_password" = "Las contraseñas no coinciden.";
+"short_retype_password" = "La contraseña reintroducida debe tener al menos 8 caracteres.";
+"long_retype_password" = "La contraseña reintroducida no debe tener más de 50 caracteres.";
+"required_retype_password" = "Es obligatorio volver a introducir la contraseña.";
+
+"empty_comment" = "Por favor introduzca su comentario.";
+"short_comment" = "El comentario debe tener al menos 2 caracteres.";
+"long_comment" = "El comentario no debe tener más de 500 caracteres.";
+"required_comment" = "El comentario es obligatorio.";
+
+"empty_description" = "Por favor introduzca la descripción.";
+"short_description" = "La descripción debe tener al menos 10 caracteres.";
+"long_description" = "La descripción no debe tener más de 1000 caracteres.";
+"required_description" = "La descripción es obligatoria.";
+
+"required_radio_button" = "Por favor seleccione una opción.";
+
+"required_file_upload" = "Por favor cargue un archivo.";
+"type_file_upload" = "Tipo de archivo no válido. Tipos permitidos: JPG, JPEG, PNG, GIF, PDF, DOC, DOCX, TXT.";
+"size_file_upload" = "El tamaño del archivo supera el límite de 5 MB.";
+
+"textarea_length" = "Se ha superado el número máximo de caracteres.";
+
+"logout_confirmation" = "¿Está seguro de que desea cerrar sesión?";
+"delete_item_confirmation" = "¿Está seguro de que desea eliminar este elemento?";
+"delete_all_items_confirmation" = "¿Está seguro de que desea eliminar todos los elementos?";
+"clear_cart_confirmation" = "¿Está seguro de que desea vaciar su carrito?";
+
+"functionality_not_implemented" = "La funcionalidad a la que intenta acceder aún no está implementada.";

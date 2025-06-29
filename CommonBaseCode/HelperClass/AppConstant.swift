@@ -17,12 +17,218 @@ struct AppConstant {
         static let toastSuccessText = #colorLiteral(red: 0.08235294118, green: 0.3411764706, blue: 0.1411764706, alpha: 1)
     }
     
-    // MARK: - Validation messages shown to users
-    struct ValidationMessage {
-        static let emptyEmail = LocalizedConstants.empty_validate_email.localized
-        static let invalidEmail = LocalizedConstants.invalid_email.localized
-        static let emptyPassword = LocalizedConstants.empty_validate_password.localized
-        static let invalidPassword = LocalizedConstants.error_invalid_password.localized
+    //MARK: - Input Filed Validation messages shown to users
+    struct InputFiledValidationMessage {
+        struct Email {
+            static let emptyEmail = LocalizedConstants.empty_validate_email.localized
+            static let invalid = LocalizedConstants.invalid_email.localized
+            static let short = LocalizedConstants.short_email.localized
+            static let long = LocalizedConstants.long_email.localized
+            static let requiredEmail = LocalizedConstants.required_email.localized
+        }
+
+        struct Password {
+            static let emptyPassword = LocalizedConstants.empty_validate_password.localized
+            static let short = LocalizedConstants.short_password.localized
+            static let long = LocalizedConstants.long_password.localized
+            static let weak = LocalizedConstants.error_invalid_password.localized
+            static let requiredPassword = LocalizedConstants.required_password.localized
+        }
+
+        struct Username {
+            static let emptyUsername = LocalizedConstants.empty_username.localized
+            static let short = LocalizedConstants.short_username.localized
+            static let long = LocalizedConstants.long_username.localized
+            static let invalid = LocalizedConstants.invalid_username.localized
+            static let requiredUsername = LocalizedConstants.required_username.localized
+        }
+
+        struct FullName {
+            static let emptyFullName = LocalizedConstants.empty_fullname.localized
+            static let short = LocalizedConstants.short_fullname.localized
+            static let long = LocalizedConstants.long_fullname.localized
+            static let invalid = LocalizedConstants.invalid_fullname.localized
+            static let requiredFullName = LocalizedConstants.required_fullname.localized
+        }
+
+        struct Phone {
+            static let emptyPhone = LocalizedConstants.empty_phone.localized
+            static let invalid = LocalizedConstants.invalid_phone.localized
+            static let short = LocalizedConstants.short_phone.localized
+            static let long = LocalizedConstants.long_phone.localized
+            static let requiredPhone = LocalizedConstants.required_phone.localized
+        }
+
+        struct Address {
+            static let emptyAddress = LocalizedConstants.empty_address.localized
+            static let short = LocalizedConstants.short_address.localized
+            static let long = LocalizedConstants.long_address.localized
+            static let requiredAddress = LocalizedConstants.required_address.localized
+        }
+
+        struct DateOfBirth {
+            static let empty = LocalizedConstants.empty_dob.localized
+            static let invalid = LocalizedConstants.invalid_dob.localized
+            static let required = LocalizedConstants.required_dob.localized
+        }
+
+        struct CreditCard {
+            static let empty = LocalizedConstants.empty_credit_card.localized
+            static let invalid = LocalizedConstants.invalid_credit_card.localized
+            static let required = LocalizedConstants.required_credit_card.localized
+        }
+
+        struct ExpiryDate {
+            static let empty = LocalizedConstants.empty_expiry_date.localized
+            static let invalid = LocalizedConstants.invalid_expiry_date.localized
+            static let expired = LocalizedConstants.expired_expiry_date.localized
+            static let required = LocalizedConstants.required_expiry_date.localized
+        }
+
+        struct CVV {
+            static let empty = LocalizedConstants.empty_cvv.localized
+            static let invalid = LocalizedConstants.invalid_cvv.localized
+            static let required = LocalizedConstants.required_cvv.localized
+        }
+
+        struct ZipCodePostalCode {
+            static let empty = LocalizedConstants.empty_zipcode.localized
+            static let invalid = LocalizedConstants.invalid_zipcode.localized
+            static let required = LocalizedConstants.required_zipcode.localized
+        }
+
+        struct SecurityQuestion {
+            static let empty = LocalizedConstants.empty_security_question.localized
+        }
+
+        struct SecurityAnswer {
+            static let empty = LocalizedConstants.empty_security_answer.localized
+        }
+
+        struct Location {
+            static let empty = LocalizedConstants.empty_location.localized
+            static let short = LocalizedConstants.short_location.localized
+            static let long = LocalizedConstants.long_location.localized
+            static let required = LocalizedConstants.required_location.localized
+        }
+
+        struct SelectLocation {
+            static let empty = LocalizedConstants.empty_select_location.localized
+            static let invalid = LocalizedConstants.invalid_select_location.localized
+            static let required = LocalizedConstants.required_select_location.localized
+        }
+
+        struct UploadProfilePicture {
+            static let empty = LocalizedConstants.empty_upload_profile_picture.localized
+            static let invalid = LocalizedConstants.invalid_upload_profile_picture.localized
+            static let format = LocalizedConstants.format_upload_profile_picture.localized
+            static let size = LocalizedConstants.size_upload_profile_picture.localized
+            static let required = LocalizedConstants.required_upload_profile_picture.localized
+        }
+
+        struct SelectProfilePicture {
+            static let empty = LocalizedConstants.empty_select_profile_picture.localized
+            static let invalid = LocalizedConstants.invalid_select_profile_picture.localized
+            static let required = LocalizedConstants.required_select_profile_picture.localized
+        }
+
+        struct Age {
+            static let empty = LocalizedConstants.empty_age.localized
+            static let invalid = LocalizedConstants.invalid_age.localized
+            static let low = LocalizedConstants.low_age.localized
+            static let high = LocalizedConstants.high_age.localized
+            static let required = LocalizedConstants.required_age.localized
+        }
+
+        struct SelectAge {
+            static let empty = LocalizedConstants.empty_select_age.localized
+            static let invalid = LocalizedConstants.invalid_select_age.localized
+            static let required = LocalizedConstants.required_select_age.localized
+        }
+
+        struct Gender {
+            static let empty = LocalizedConstants.empty_gender.localized
+            static let invalid = LocalizedConstants.invalid_gender.localized
+            static let required = LocalizedConstants.required_gender.localized
+        }
+
+        struct FirstName {
+            static let empty = LocalizedConstants.empty_firstname.localized
+            static let short = LocalizedConstants.short_firstname.localized
+            static let long = LocalizedConstants.long_firstname.localized
+            static let required = LocalizedConstants.required_firstname.localized
+        }
+
+        struct LastName {
+            static let empty = LocalizedConstants.empty_lastname.localized
+            static let short = LocalizedConstants.short_lastname.localized
+            static let long = LocalizedConstants.long_lastname.localized
+            static let required = LocalizedConstants.required_lastname.localized
+        }
+
+        struct MiddleName {
+            static let empty = LocalizedConstants.empty_middlename.localized
+            static let short = LocalizedConstants.short_middlename.localized
+            static let long = LocalizedConstants.long_middlename.localized
+            static let required = LocalizedConstants.required_middlename.localized
+        }
+
+        struct RetypePassword {
+            static let empty = LocalizedConstants.empty_retype_password.localized
+            static let mismatch = LocalizedConstants.mismatch_password.localized
+            static let short = LocalizedConstants.short_retype_password.localized
+            static let long = LocalizedConstants.long_retype_password.localized
+            static let required = LocalizedConstants.required_retype_password.localized
+        }
+
+        struct Comments {
+            static let empty = LocalizedConstants.empty_comment.localized
+            static let short = LocalizedConstants.short_comment.localized
+            static let long = LocalizedConstants.long_comment.localized
+            static let required = LocalizedConstants.required_comment.localized
+        }
+
+        struct Description {
+            static let empty = LocalizedConstants.empty_description.localized
+            static let short = LocalizedConstants.short_description.localized
+            static let long = LocalizedConstants.long_description.localized
+            static let required = LocalizedConstants.required_description.localized
+        }
+
+        struct RadioButtons {
+            static let required = LocalizedConstants.required_radio_button.localized
+        }
+
+        struct FileUpload {
+            static let required = LocalizedConstants.required_file_upload.localized
+            static let type = LocalizedConstants.type_file_upload.localized
+            static let size = LocalizedConstants.size_file_upload.localized
+        }
+
+        struct TextArea {
+            static let length = LocalizedConstants.length_text_area.localized
+        }
+
+        struct Logout {
+            static let logoutConfirmation = LocalizedConstants.confirmation_logout.localized
+        }
+
+        struct DeleteItem {
+            static let deleteItemConfirmation = LocalizedConstants.confirmation_delete_item.localized
+        }
+
+        struct DeleteAllItems {
+            static let deleteAllItemsConfirmation = LocalizedConstants.confirmation_delete_all_items.localized
+        }
+
+        struct ClearCart {
+            static let clearCartConfirmation = LocalizedConstants.confirmation_clear_cart.localized
+        }
+
+        struct Warnning {
+            static let functionalityNotImplemented = LocalizedConstants.functionality_not_implemented.localized
+        }
+        
         static let passwordRecoveryDetails = LocalizedConstants.static_text_label_password_recovery.localized
         static let outofstock = LocalizedConstants.static_text_label_out_of_stock.localized
         static let in_stock = LocalizedConstants.static_text_label_in_stock.localized
