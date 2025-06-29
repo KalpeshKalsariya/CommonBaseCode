@@ -9,15 +9,21 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // MARK: - Properties
+
+    /// Array to store media objects
     lazy var arrMedia: [MediaObject] = {
         return []
     }()
     
+    /// ViewModel for login screen
     lazy var viewModel: LoginViewModel = {
         return LoginViewModel()
     }()
     
     var isFirstTimeGetCountry: Bool = true
+    
+    // MARK: - Outlets
     @IBOutlet weak var imgCountryFlag: UIImageView!
     @IBOutlet weak var lblCountryCode: UILabel!
     @IBOutlet weak var lblCountryTitle: UILabel!
@@ -25,7 +31,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var viewPhone: UIView!
     @IBOutlet weak var viewPhoneBorder: UIView!
     @IBOutlet weak var constraintCountryCodeWidth: NSLayoutConstraint!
+    @IBOutlet weak var viewBlink: UIView!
     
+    /// Computed property to get current country info using locale
     var currentCountry: Country? {
         guard let countryCode = Locale.current.region?.identifier else {
             return nil
@@ -33,113 +41,74 @@ class ViewController: UIViewController {
         return Country(countryCode: countryCode)
     }
     
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
-//        self.callLoginAPI()
+        // Initial login API call
+        self.callLoginAPI()
         
-        /**
-         This method is used to check socket connection
-         - check socket connection: if connection exists then send data to server
-         - connect socket: send connection request to server if socket is connected then send data to server
-         */
-        
-        /*if SocketManager.shared.checkConnection() {
-            Utils.sendSocketEmitData(socketID: "your stored Socket Id", screenName: "\(self.classForCoder)")
-        }
-        else {
-            SocketManager.shared.connectSocket { isSuccess, socketID in
-                if isSuccess {
-                    Utils.sendSocketEmitData(socketID: "your stored Socket Id", screenName: "\(self.classForCoder)")
-                }
-            }
-        }*/
-        
-        /**
-         This method is used to upload Media to S3 Bucket.
-         - user-profile-image: folder of your s3bucket
-         - once upload sucessfully then received sucess respose with key append your s3 bucket base url
-         */
-        /*var objMedia: MediaObject?
-        
-        let name = objMedia?.bucketName ?? ""
-        let key = "user-profile-image/\(objMedia?.key ?? "")" //user-profile-image: folder of your s3bucket
-        let image = objMedia?.image ?? UIImage()
-        
-        AWSManager.uploadMediaToS3Bucket(isForProfile: true, bucketName: name, mediaKey: key, image: image, fileURL: objMedia?.url, type: .image) { isSuccess in
-            
-            //user-profile-image: folder of your s3bucket
-            print("/user-profile-image/\(objMedia?.key ?? "")".appendS3BaseURL())
-            
-        } failure: { error in
-            self.showToast(message: "Failed to upload media, please try again!", isSuccess: false)
-            objMedia = nil
-        } progressBlock: { progress in
-            print(progress)
-            
-        }*/
-        
-        /**
-         This method is used to dowload File.
-         - check file exist or not
-         - download dile asyncronous
-         */
-        
-        /*if self.arrMedia.count > 0 {
-            let obj = self.arrMedia[0]
-            if FileDownloader.checkIfFileExists(mediaObj: obj) {
-                self.showToast(message: "File already exists!", isSuccess: false)
-            }
-            else {
-                self.showToast(message: "Media downloading started, It will be saved shortly.", isSuccess: true)
-                FileDownloader.loadFileAsync(mediaObj: obj) { message, error in
-                    DispatchQueue.main.async {
-                        let topVC = AppManager.shared.topViewController()
-                        if error != nil {
-                            topVC.showToast(message: message, isSuccess: false)
-                        }
-                    }
-                }
-            }
-        }*/
-        
+        // Set country flag, dialing code and adjust UI
         self.setCurrentCountry()
+        self.animateTextView(view: self.viewPhoneBorder, label: self.lblCountryTitle, isEmpty: self.txtPhoneCode.text?.trim() == "")
+        
+        // Uncomment to use:
+        // self.checkSocketConnection()
+        // self.uploadMediaToS3()
+        // self.downloadMediaIfNeeded()
+        
+        self.viewBlink.blinkView()
     }
+    
+    // MARK: - Setup Methods
 
-
+    /// Set current country details in the UI
     private func setCurrentCountry() {
         lblCountryCode.text = currentCountry?.dialingCode
         let font = UIFont.systemFont(ofSize: AppConstant.DeviceType.IS_PAD ? 18.0 : 16.0)
         self.lblCountryCode.font = font
         self.txtPhoneCode.font = font
-        let extrawidth = AppConstant.DeviceType.IS_PAD ? 10 : 0
-        let cellWidth = (currentCountry?.dialingCode?.textWidth(font:font) ?? 0.00) + CGFloat(extrawidth)
-        constraintCountryCodeWidth.constant = cellWidth
+        self.txtPhoneCode.delegate = self
         
-        #if SWIFT_PACKAGE
-            let bundle = Bundle.module
-        #else
-            let bundle = Bundle(for: Country.self)
-        #endif
+        // Adjust width of label based on content
+        let extraWidth = AppConstant.DeviceType.IS_PAD ? 10 : 0
+        let labelWidth = (currentCountry?.dialingCode?.textWidth(font: font) ?? 0.0) + CGFloat(extraWidth)
+        constraintCountryCodeWidth.constant = labelWidth
         
-        let flagImg = UIImage(named: currentCountry!.imagePath, in: bundle, compatibleWith: nil)
+        // Load country flag from bundle
+#if SWIFT_PACKAGE
+        let bundle = Bundle.module
+#else
+        let bundle = Bundle(for: Country.self)
+#endif
         
-        imgCountryFlag.image = flagImg
-        imgCountryFlag.isHidden = false
+        if let flagImage = UIImage(named: currentCountry!.imagePath, in: bundle, compatibleWith: nil) {
+            imgCountryFlag.image = flagImage
+            imgCountryFlag.isHidden = false
+        }
+    }
+    
+    func animateTextView(view: UIView, label: UILabel, isEmpty: Bool) {
+        DispatchQueue.main.async {
+            label.isHidden = isEmpty
+            view.backgroundColor = isEmpty ? AppConstant.Colors.toastErrorBG : AppConstant.Colors.toastSuccessText
+        }
     }
 }
 
-//API call
+// MARK: - API Call
+
 extension ViewController {
+
+    /// Calls API to login into the store
     func callLoginAPI() {
-        var params : JSONType = JSONType()
+        var params: JSONType = [:]
         params[LoginParameterKey.email.rawValue] = ""
         params[LoginParameterKey.password.rawValue] = ""
-        
-        self.viewModel.callAPIToLoginInStore(params: params) { (isSuccess, message) in
+
+        viewModel.callAPIToLoginInStore(params: params) { isSuccess, message in
             if isSuccess {
-                //navigate to dashboard screen or as per your functionality
+                // Navigate to dashboard or next screen
 //                if let vc = R.storyboard.main.homeVC() {
 //                    self.navigationController?.pushViewController(vc, animated: true)
 //                }
@@ -150,8 +119,11 @@ extension ViewController {
     }
 }
 
-//Button Action
+// MARK: - Actions
+
 extension ViewController {
+
+    /// Handles country picker button tap
     @IBAction func btnCountryCodeSelectionAction(_ sender: UIButton) {
         presentCountryPickerScene(withSelectionControlEnabled: false)
     }
@@ -223,5 +195,81 @@ extension ViewController {
                 self.constraintCountryCodeWidth.constant = cellWidth
             }
         }
+    }
+}
+
+// MARK: - Socket & Media Handling (Reusable Examples)
+
+extension ViewController {
+
+    /// Example: Checks and connects socket
+    private func checkSocketConnection() {
+        if SocketManager.shared.checkConnection() {
+            Utils.sendSocketEmitData(socketID: "your stored Socket Id", screenName: "\(self.classForCoder)")
+        } else {
+            SocketManager.shared.connectSocket { isSuccess, socketID in
+                if isSuccess {
+                    Utils.sendSocketEmitData(socketID: "your stored Socket Id", screenName: "\(self.classForCoder)")
+                }
+            }
+        }
+    }
+
+    /// Example: Uploads media to S3 bucket
+    private func uploadMediaToS3() {
+        var objMedia: MediaObject?
+
+        let bucketName = objMedia?.bucketName ?? ""
+        let mediaKey = "user-profile-image/\(objMedia?.key ?? "")"
+        let image = objMedia?.image ?? UIImage()
+
+        AWSManager.uploadMediaToS3Bucket(isForProfile: true, bucketName: bucketName, mediaKey: mediaKey, image: image, fileURL: objMedia?.url, type: .image) { isSuccess in
+            print("/user-profile-image/\(objMedia?.key ?? "")".appendS3BaseURL())
+        } failure: { error in
+            self.showToast(message: "Failed to upload media, please try again!", isSuccess: false)
+            objMedia = nil
+        } progressBlock: { progress in
+            print(progress)
+        }
+    }
+
+    /// Example: Downloads media if not already existing
+    private func downloadMediaIfNeeded() {
+        guard let obj = arrMedia.first else { return }
+
+        if FileDownloader.checkIfFileExists(mediaObj: obj) {
+            self.showToast(message: "File already exists!", isSuccess: false)
+        } else {
+            self.showToast(message: "Media downloading started. It will be saved shortly.", isSuccess: true)
+            FileDownloader.loadFileAsync(mediaObj: obj) { message, error in
+                DispatchQueue.main.async {
+                    let topVC = AppManager.shared.topViewController()
+                    topVC.showToast(message: message, isSuccess: error == nil)
+                }
+            }
+        }
+    }
+}
+
+//Textfield Delegate Method
+extension ViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let text = textField.text as NSString? {
+            let newtext = text.replacingCharacters(in: range, with: string)
+            
+            switch textField {
+            case self.txtPhoneCode:
+                self.animateTextView(view: self.viewPhoneBorder, label: self.lblCountryTitle, isEmpty: newtext == "")
+            default:
+                print("")
+            }
+        }
+        return true
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+    
+        return true
     }
 }

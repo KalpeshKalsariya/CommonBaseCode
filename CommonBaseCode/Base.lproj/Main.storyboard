@@ -158,25 +158,29 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q4s-mB-hqg">
-                                <rect key="frame" x="20" y="434" width="353" height="34"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HWe-qv-ceY">
+                                <rect key="frame" x="16" y="263" width="30" height="30"/>
+                                <color key="backgroundColor" systemColor="systemPinkColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="2FT-2e-cdl"/>
+                                    <constraint firstAttribute="width" secondItem="HWe-qv-ceY" secondAttribute="height" multiplier="1:1" id="3n5-Mp-97y"/>
+                                    <constraint firstAttribute="height" constant="30" id="bve-cd-qRX"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Q4s-mB-hqg" secondAttribute="trailing" constant="20" id="JPp-lV-3KJ"/>
+                            <constraint firstItem="HWe-qv-ceY" firstAttribute="leading" secondItem="LEF-pm-Qg9" secondAttribute="leading" id="1FQ-5b-qbU"/>
                             <constraint firstItem="LEF-pm-Qg9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="MKm-cO-0Hs"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LEF-pm-Qg9" secondAttribute="trailing" constant="16" id="MLI-rj-ZRd"/>
-                            <constraint firstItem="Q4s-mB-hqg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="XQn-lQ-yw2"/>
-                            <constraint firstItem="Q4s-mB-hqg" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="akZ-ee-HxG"/>
+                            <constraint firstItem="HWe-qv-ceY" firstAttribute="width" secondItem="HWe-qv-ceY" secondAttribute="height" multiplier="1:1" id="Zjb-rZ-h8e"/>
+                            <constraint firstItem="HWe-qv-ceY" firstAttribute="top" secondItem="LEF-pm-Qg9" secondAttribute="bottom" constant="50" id="aSC-5i-S81"/>
                             <constraint firstItem="LEF-pm-Qg9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="eei-a6-aam"/>
-                            <constraint firstItem="Q4s-mB-hqg" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="fd1-0q-9qj"/>
                         </constraints>
                     </view>
                     <connections>
@@ -185,6 +189,7 @@
                         <outlet property="lblCountryCode" destination="UES-pZ-s5y" id="XXJ-Tw-lBU"/>
                         <outlet property="lblCountryTitle" destination="cZq-Hk-Acv" id="Rfk-qo-RSv"/>
                         <outlet property="txtPhoneCode" destination="q3h-fR-GTL" id="W3V-7G-wkr"/>
+                        <outlet property="viewBlink" destination="HWe-qv-ceY" id="fBd-Oy-g5A"/>
                         <outlet property="viewPhoneBorder" destination="sS8-da-3nM" id="ayY-3I-9Bc"/>
                     </connections>
                 </viewController>
@@ -203,6 +208,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
