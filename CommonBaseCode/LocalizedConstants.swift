@@ -15,7 +15,11 @@ enum LocalizedConstants: String {
     case server_error_not_found_404
     case server_error_method_not_allowed_405
     case server_error_internal_server_500
+    case server_error_not_implemented_501
+    case server_error_bad_gateway_502
     case server_error_service_unavailable_503
+    case server_error_gateway_timeout_504
+    case server_error_unknown
     case error_internet_connection
     case confirmation_message_logout
     case confirmation_message_clear_data

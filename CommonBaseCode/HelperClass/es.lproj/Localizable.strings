@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  CommonBaseCode
+
+  Created by  Kalpesh on 29/06/25.
+  
+*/
+
+"server_error_bad_request_400" = "El servidor no puede entender la solicitud.";
+"server_error_unauthorized_401" = "Se requiere autenticacion.";
+"server_error_forbidden_403" = "No tienes permiso para acceder al recurso solicitado.";
+"server_error_not_found_404" = "El recurso solicitado no se pudo encontrar en el servidor.";
+"server_error_method_not_allowed_405" = "El método HTTP solicitado no está permitido para el recurso dado.";
+"server_error_internal_server_500" = "El servidor encontró una condición inesperada.";
+"server_error_not_implemented_501" = "El servidor no admite la funcionalidad necesaria para cumplir con la solicitud.";
+"server_error_bad_gateway_502" = "El servidor, mientras actuaba como puerta de enlace o proxy, recibió una respuesta no válida del servidor ascendente.";
+"server_error_service_unavailable_503" = "El servidor no puede procesar temporalmente la solicitud debido a mantenimiento o sobrecarga.";
+"server_error_gateway_timeout_504" = "El servidor, mientras actuaba como puerta de enlace o proxy, no recibió una respuesta oportuna del servidor ascendente.";
+"server_error_unknown" = "Se produjo un error inesperado.";
+"error_internet_connection" = "Su solicitud no pudo ser procesada porque su dispositivo no está conectado a Internet.";
+"confirmation_message_logout" = "¿Estás segura de que quieres cerrar sesión?";
+"confirmation_message_clear_data" = "¿Está seguro de que desea un elemento de datos claro?";
+"button_title_yes" = "Sí";
+"button_title_no" = "No";
+"button_title_ok" = "De acuerdo";
+"button_title_cancel" = "Cancelar";
+"static_text_label_required" = "Requerida";
+"static_text_label_no_data_found" = "Datos no encontrados.";
+"empty_validate_email" = "Por favor introduzca su correo electrónico.";
+"invalid_email" = "Email inválido.";
+"empty_validate_password" = "Por favor, ingrese contraseña.";
+"error_invalid_password" = "La contraseña debe tener mínimo 8 caracteres y contener 1 caracter especial.";
+"static_text_label_password_recovery" = "Le enviaremos un correo electrónico de recuperación de contraseña a su correo electrónico.";
+"static_text_label_out_of_stock" = "Agotado";
+"static_text_label_in_stock" = "en stock";

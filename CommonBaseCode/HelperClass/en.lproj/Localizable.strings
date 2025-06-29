@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  CommonBaseCode
+
+  Created by  Kalpesh on 29/06/25.
+  
+*/
+
+"server_error_bad_request_400" = "The server cannot understand the request.";
+"server_error_unauthorized_401" = "Authentication is required.";
+"server_error_forbidden_403" = "You don't have permission to access the requested resource.";
+"server_error_not_found_404" = "The requested resource could not be found on the server.";
+"server_error_method_not_allowed_405" = "The requested HTTP method is not allowed for the given resource.";
+"server_error_internal_server_500" = "The server encountered an unexpected condition.";
+"server_error_not_implemented_501" = "The server does not support the functionality required to fulfill the request.";
+"server_error_bad_gateway_502" = "The server, while acting as a gateway or proxy, received an invalid response from the upstream server.";
+"server_error_service_unavailable_503" = "The server is temporarily unable to handle the request due to maintenance or overloading.";
+"server_error_gateway_timeout_504" = "The server, while acting as a gateway or proxy, did not receive a timely response from the upstream server.";
+"server_error_unknown" = "An unexpected error occurred.";
+"error_internet_connection" = "Your request could not be processed because your device is not connected to the internet.";
+"confirmation_message_logout" = "Are you sure you want to logout?";
+"confirmation_message_clear_data" = "Are you sure you want clear data item?";
+"button_title_yes" = "Yes";
+"button_title_no" = "No";
+"button_title_ok" = "Ok";
+"button_title_cancel" = "Cancel";
+"static_text_label_required" = "Required";
+"static_text_label_no_data_found" = "No Data Found.";
+"empty_validate_email" = "Please enter your email.";
+"invalid_email" = "Invalid Email.";
+"empty_validate_password" = "Please enter password.";
+"error_invalid_password" = "The password must have a minimum of 8 characters and contain 1 special character.";
+"static_text_label_password_recovery" = "We will send a password recovery email to your email.";
+"static_text_label_out_of_stock" = "out of stock";
+"static_text_label_in_stock" = "in stock";

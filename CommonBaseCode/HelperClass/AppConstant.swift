@@ -30,28 +30,17 @@ struct AppConstant {
     
     // MARK: - Common server error messages with localization
     struct ServerErrorMessage {
-        static let Status_400 = LocalizedConstants.server_error_bad_request_400.localized //"Bad Request"
-        static let Status_401 = LocalizedConstants.server_error_unauthorized_401.localized //"Unauthorized"
-        static let Status_403 = LocalizedConstants.server_error_forbidden_403.localized //Forbidden
-        static let Status_404 = LocalizedConstants.server_error_not_found_404.localized //Not Found
-        static let Status_405 = LocalizedConstants.server_error_method_not_allowed_405.localized //"Method Not Allowed"
-        static let Status_500 = LocalizedConstants.server_error_internal_server_500.localized //"Internal Server Error"
-        static let Status_503 = LocalizedConstants.server_error_service_unavailable_503.localized //"Service Unavailable"
-    }
-    
-    // MARK: - Hardcoded fallback messages (non-localized)
-    struct ConstantMessage {
-        static let badRequest = "Bad Request: The server could not understand the request."
-        static let unauthorized = "Unauthorized: Authentication is required to access this resource."
-        static let forbidden = "Forbidden: You do not have permission to access this resource."
-        static let notFound = "Not Found: The requested resource was not found on the server."
-        static let methodNotAllowed = "Method Not Allowed: The requested HTTP method is not supported for this resource."
-        static let internalServerError = "Internal Server Error: An unexpected error occurred on the server."
-        static let notImplemented = "Not Implemented: The server does not support the functionality required to fulfill the request."
-        static let badGateway = "Bad Gateway: The server, while acting as a gateway or proxy, received an invalid response from the upstream server."
-        static let serviceUnavailable = "Service Unavailable: The server is currently unable to handle the request due to temporary overloading or maintenance of the server."
-        static let gatewayTimeout = "Gateway Timeout: The server, while acting as a gateway or proxy, did not receive a timely response from the upstream server."
-        static let unknownError = "Unknown Error: An unexpected error occurred."
+        static let Status_400 = LocalizedConstants.server_error_bad_request_400.localized //"Bad Request:"
+        static let Status_401 = LocalizedConstants.server_error_unauthorized_401.localized //"Unauthorized:"
+        static let Status_403 = LocalizedConstants.server_error_forbidden_403.localized //"Forbidden:"
+        static let Status_404 = LocalizedConstants.server_error_not_found_404.localized //"Not Found:"
+        static let Status_405 = LocalizedConstants.server_error_method_not_allowed_405.localized //"Method Not Allowed:"
+        static let Status_500 = LocalizedConstants.server_error_internal_server_500.localized //"Internal Server Error:"
+        static let Status_501 = LocalizedConstants.server_error_not_implemented_501.localized // "Not Implemented:"
+        static let Status_502 = LocalizedConstants.server_error_bad_gateway_502.localized //"Bad Gateway:"
+        static let Status_503 = LocalizedConstants.server_error_service_unavailable_503.localized //"Service Unavailable:"
+        static let Status_504 = LocalizedConstants.server_error_gateway_timeout_504.localized //"Gateway Timeout:"
+        static let Unknown    = LocalizedConstants.server_error_unknown.localized //"Unknown Error:"
     }
     
     // MARK: - General static error messages

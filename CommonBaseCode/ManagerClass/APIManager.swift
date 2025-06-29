@@ -98,31 +98,14 @@ class APIManager {
                             failure("Invalid JSON Format", statusCode)
                         }
                     } else {
-                        let errorMessage = self.errorMessage(forStatusCode: statusCode)
-                        failure(errorMessage, statusCode)
+                        let serverStatusCodeValue = ServerStatusCode.from(statusCode)
+                        failure(serverStatusCodeValue.message, statusCode)
                     }
                     
                 case .failure(let error):
                     failure(error.localizedDescription, 500)
                 }
             }
-    }
-    
-    // MARK: - Error message helper
-    private class func errorMessage(forStatusCode statusCode: Int) -> String {
-        switch statusCode {
-        case 400: return AppConstant.ConstantMessage.badRequest
-        case 401: return AppConstant.ConstantMessage.unauthorized
-        case 403: return AppConstant.ConstantMessage.forbidden
-        case 404: return AppConstant.ConstantMessage.notFound
-        case 405: return AppConstant.ConstantMessage.methodNotAllowed
-        case 500: return AppConstant.ConstantMessage.internalServerError
-        case 501: return AppConstant.ConstantMessage.notImplemented
-        case 502: return AppConstant.ConstantMessage.badGateway
-        case 503: return AppConstant.ConstantMessage.serviceUnavailable
-        case 504: return AppConstant.ConstantMessage.gatewayTimeout
-        default:  return AppConstant.ConstantMessage.unknownError
-        }
     }
     
     
