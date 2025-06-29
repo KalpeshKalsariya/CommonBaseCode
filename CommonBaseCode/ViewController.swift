@@ -11,16 +11,17 @@ class ViewController: UIViewController {
 
     // MARK: - Properties
 
-    /// Array to store media objects
+    /// Array to store selected or available media files
     lazy var arrMedia: [MediaObject] = {
         return []
     }()
     
-    /// ViewModel for login screen
+    /// ViewModel responsible for handling login business logic and API calls
     lazy var viewModel: LoginViewModel = {
         return LoginViewModel()
     }()
     
+    /// Flag to check if country is selected first time (used in country picker flow)
     var isFirstTimeGetCountry: Bool = true
     
     // MARK: - Outlets
@@ -28,13 +29,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var lblCountryCode: UILabel!
     @IBOutlet weak var lblCountryTitle: UILabel!
     @IBOutlet weak var txtPhoneCode: UITextField!
-    @IBOutlet weak var viewPhone: UIView!
     @IBOutlet weak var viewPhoneBorder: UIView!
     @IBOutlet weak var constraintCountryCodeWidth: NSLayoutConstraint!
     @IBOutlet weak var viewBlink: UIView!
-    
     @IBOutlet weak var tableView: UITableView!
 
+    /// Form fields for login screen (email, password, etc.)
     var fields: [FieldData] = [
         FieldData(title: "Email", placeholder: "Enter email", value: "", type: .email),
         FieldData(title: "Password", placeholder: "Enter password", value: "", type: .password),
@@ -42,7 +42,8 @@ class ViewController: UIViewController {
         FieldData(title: "Username", placeholder: "Enter username", value: "", type: .username),
         FieldData(title: "Full Name", placeholder: "Enter full name", value: "", type: .fullname)
     ]
-    /// Computed property to get current country info using locale
+    
+    /// Returns `Country` info based on current locale
     var currentCountry: Country? {
         guard let countryCode = Locale.current.region?.identifier else {
             return nil
@@ -54,11 +55,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initial login API call
-        self.callLoginAPI()
+        // Trigger login API (empty params for now)
+//        self.callLoginAPI()
         
-        // Set country flag, dialing code and adjust UI
+        // Set default country UI elements
         self.setCurrentCountry()
+        
+        // Animate border and title based on phone field content
         self.animateTextView(view: self.viewPhoneBorder, label: self.lblCountryTitle, isEmpty: self.txtPhoneCode.text?.trim() == "")
         
         // Uncomment to use:
@@ -68,18 +71,17 @@ class ViewController: UIViewController {
         
         self.viewBlink.blinkView()
         
+        // Setup table view
         tableView.dataSource = self
         tableView.delegate = self
-        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
-        
         tableView.register(UINib(nibName: "FormFieldCell", bundle: nil), forCellReuseIdentifier: "FormFieldCell")
     }
     
     // MARK: - Setup Methods
 
-    /// Set current country details in the UI
+    /// Set current country flag, dialing code, and adjust UI widths
     private func setCurrentCountry() {
         lblCountryCode.text = currentCountry?.dialingCode
         let font = UIFont.systemFont(ofSize: AppConstant.DeviceType.IS_PAD ? 18.0 : 16.0)
@@ -92,7 +94,7 @@ class ViewController: UIViewController {
         let labelWidth = (currentCountry?.dialingCode?.textWidth(font: font) ?? 0.0) + CGFloat(extraWidth)
         constraintCountryCodeWidth.constant = labelWidth
         
-        // Load country flag from bundle
+        // Load and display flag image
 #if SWIFT_PACKAGE
         let bundle = Bundle.module
 #else
@@ -105,6 +107,7 @@ class ViewController: UIViewController {
         }
     }
     
+    /// Animate label and border color based on input field being empty
     func animateTextView(view: UIView, label: UILabel, isEmpty: Bool) {
         DispatchQueue.main.async {
             label.isHidden = isEmpty
@@ -117,7 +120,7 @@ class ViewController: UIViewController {
 
 extension ViewController {
 
-    /// Calls API to login into the store
+    /// Calls login API using ViewModel and handles response
     func callLoginAPI() {
         var params: JSONType = [:]
         params[LoginParameterKey.email.rawValue] = ""
@@ -136,16 +139,16 @@ extension ViewController {
     }
 }
 
-// MARK: - Actions
+// MARK: - User Actions
 
 extension ViewController {
 
-    /// Handles country picker button tap
+    /// Country code selection button tapped
     @IBAction func btnCountryCodeSelectionAction(_ sender: UIButton) {
         presentCountryPickerScene(withSelectionControlEnabled: false)
     }
     
-    /// Validate all input filed button tap
+    /// Validate all fields and collect data if valid
     @IBAction func validateAllFields(_ sender: UIButton) {
         var allValid = true
         
@@ -172,16 +175,10 @@ extension ViewController {
 
 }
 
-//Present Country Picker Controller
+// MARK: - Country Picker
 extension ViewController {
     
-    /// Dynamically presents country picker scene with an option of including `Selection Control`.
-    ///
-    /// By default, invoking this function without defining `selectionControlEnabled` parameter. Its set to `True`
-    /// unless otherwise and the `Selection Control` will be included into the list view.
-    ///
-    /// - Parameter selectionControlEnabled: Section Control State. By default its set to `True` unless otherwise.
-    
+    /// Presents country picker with/without section control
     func presentCountryPickerScene(withSelectionControlEnabled selectionControlEnabled: Bool = true) {
         switch selectionControlEnabled {
         case true:
@@ -241,11 +238,11 @@ extension ViewController {
     }
 }
 
-// MARK: - Socket & Media Handling (Reusable Examples)
+// MARK: - Media & Socket Examples
 
 extension ViewController {
 
-    /// Example: Checks and connects socket
+    /// Check socket connection status, and reconnect if needed
     private func checkSocketConnection() {
         if SocketManager.shared.checkConnection() {
             Utils.sendSocketEmitData(socketID: "your stored Socket Id", screenName: "\(self.classForCoder)")
@@ -258,7 +255,7 @@ extension ViewController {
         }
     }
 
-    /// Example: Uploads media to S3 bucket
+    /// Upload media object to AWS S3
     private func uploadMediaToS3() {
         var objMedia: MediaObject?
 
@@ -276,7 +273,7 @@ extension ViewController {
         }
     }
 
-    /// Example: Downloads media if not already existing
+    /// Download media file if not already available locally
     private func downloadMediaIfNeeded() {
         guard let obj = arrMedia.first else { return }
 
@@ -294,9 +291,11 @@ extension ViewController {
     }
 }
 
-//Textfield Delegate Method
+// MARK: - UITextFieldDelegate
+
 extension ViewController: UITextFieldDelegate {
     
+    /// Update animation based on phone input change
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if let text = textField.text as NSString? {
             let newtext = text.replacingCharacters(in: range, with: string)
@@ -312,10 +311,11 @@ extension ViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-    
         return true
     }
 }
+
+// MARK: - UITableView DataSource & Delegate
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
